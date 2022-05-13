@@ -1,11 +1,8 @@
 #Import Statements~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import cfscrape
 import datetime as dt
-import io
-import random
-from random import randint
-import requests
+import io, random as randint, pandas as pd
 from bs4 import BeautifulSoup
-import pandas as pd
 
 #Datetime: Present State retrieval~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 WeekDay_Name = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
@@ -18,15 +15,16 @@ weekday = WeekDay_Name[today]
 scnt = 0
 
 # Search words
-SQuotes = ['technology-quotes','music-quotes','car-quotes','lifting-quotes']
+SQuotes = ['technology','music','car','lifting']
 SImages = ['technology','music','cars','weight lifting']
 for topic in SQuotes:
     #QUOTE - Retrival~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #Site to be scrubbed.
     SITE = f"https://www.brainyquote.com/topics/{SQuotes[scnt]}"
 
-    #request to get site through module "requests"
-    response = requests.get(SITE)
+    #request to get site through module "cfscraper"
+    scraper = cfscrape.CloudflareScraper()
+    response = scraper.get(SITE)
     print(response)
 
     quote_html = response.text
